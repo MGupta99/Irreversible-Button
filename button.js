@@ -1,24 +1,17 @@
 var count = 0;
 
-function setCount(){
-  var xhttp = new XMLHttpRequest();
+$(document).ready(function() {
 
-  xhttp.open("GET", "count.php?q=" + count, true);
-  xhttp.send();
-  xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("count").innerHTML = "Count: " + this.responseText;
-          count = +$(this.responseText).text();
-      }
+  // Retrieves count from database and sets it equal to count
+  $.post('count.php', {value:count}, function(new_count){
+    $('.count').html("Count: " + new_count);
+    count = parseInt(new_count);
+  })
 
-  }
-}
-
-function addOne(){
-  count++;
-  document.getElementById('count').innerHTML = "Count: " + count;
-
-  xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "count.php?q=" + count, true);
-  xmlhttp.send();
-}
+  // Changes visible count and updates database
+  $('.add').click(function () {
+    count++;
+    $('.count').html("Count: " + count);
+    $.post('count.php', {value:count});
+  })
+})

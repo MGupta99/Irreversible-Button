@@ -1,6 +1,8 @@
 <?php
+  // Retrieves value of count from client
   $count = intval($_POST['value']);
 
+  // Database set up
   $db_name = 'data.db';
   $db_drvr = 'sqlite';
 
